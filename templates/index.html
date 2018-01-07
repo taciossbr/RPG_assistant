@@ -1,0 +1,180 @@
+{% extends "single.html" %}
+{% block title %}Hello World{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/script.js') }}"/>
+  
+{% endblock %}
+{% block style %}
+  <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet"/>
+
+  <style>
+    [draggable] {
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      /* Required to make elements draggable in old WebKit */
+      -khtml-user-drag: element;
+      -webkit-user-drag: element;
+    }
+
+    .column {
+    display: flex;
+    flex-direction: column;
+  }
+    
+  </style>
+
+
+{% endblock %}
+{% block header %}
+ <h1>RPG</h1>
+{% endblock %}
+{% block content %}
+
+  <button class="btn btn-primary" data-toggle="modal" data-target="#modal_raca">
+    Novo Personagem
+  </button>
+  <table class="table">
+    <thead>
+    <th>#<th>Nome<th>Raça<th>Classe<th>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+      <tr>
+      <td>{{ row.id }}
+      <td>{{ row.nome }}
+      <td>{{ row.raca }}
+      <td>{{ row.classe }}
+      <td>
+        <button id="det_{{ row.id }}" class="btn btb-danger">
+        Detalhes
+        </button>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <form>
+    <!-- escolha de raca -->
+    <div class="modal fade" id="modal_raca">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Escolha uma Raça</h5>
+          </div>
+          <div class="modal-body">
+            <label for="raca">Raça</label>
+            <select name="raca" id="raca" class="form-control">
+              {% for raca in racas %}
+                <option value="{{ raca.id }}">{{ raca.nome }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button 
+            class="btn btn-danger" 
+            data-dismiss="modal">
+            Cancel
+            </button>
+            <button 
+            class="btn btn-primary" 
+            data-dismiss="modal" 
+            data-toggle="modal"
+            data-target="#modal_classe">
+            Próximo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- classe -->
+    <div class="modal fade" id="modal_classe">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Escolha uma Classe</h5>
+          </div>
+          <div class="modal-body">
+            <label for="raca">Classe</label>
+            <select name="raca" id="classe" class="form-control">
+              {% for classe in classes %}
+                <option value="{{ classe.id }}">{{ classe.nome }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button 
+            class="btn btn-danger" 
+            data-dismiss="modal">
+            Cancel
+            </button>
+            <button 
+            class="btn btn-default" 
+            data-dismiss="modal" 
+            data-toggle="modal"
+            data-target="#modal_raca">
+            Anterior
+            </button>
+            <button 
+            class="btn btn-primary" 
+            data-dismiss="modal" 
+            data-toggle="modal"
+            data-target="#modal_habilidades">
+            Próximo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- habilidades -->
+    <div class="modal fade" id="modal_habilidades">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Escolha suas habilidades</h5>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+
+              </div>
+              <div class="col-md-6 ">
+                <div class="column">
+                  <button class="btn btn-default" draggable="true"><header>A</header></button>
+                  <button class="btn btn-default" draggable="true"><header>B</header></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button 
+            class="btn btn-danger" 
+            data-dismiss="modal">
+            Cancel
+            </button>
+            <button 
+            class="btn btn-default" 
+            data-dismiss="modal" 
+            data-toggle="modal"
+            data-target="#modal_classe">
+            Anterior
+            </button>
+            <button 
+            class="btn btn-primary" 
+            data-dismiss="modal" 
+            data-toggle="modal"
+            data-target="#next">
+            Próximo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock %}	

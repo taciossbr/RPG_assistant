@@ -1,0 +1,22 @@
+{% extends "single.html" %}
+{% block title %}Login{% endblock %}
+{% block header %}
+<h1>login</h1>
+{% endblock %}
+{% block content %}
+<form method="POST" class="form">
+ <label class="sr-only" for="login">Login</label>
+ <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+  <div class="input-group-addon">@</div>
+  <input type="text" class="form-control" id="login" placeholder="Login" name="login">
+ </div>
+
+ <label class="sr-only" for="passw">Password</label>
+ <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+  <div class="input-group-addon">Pass</div>
+  <input type="text" class="form-control" id="passw" placeholder="Password" name="passw">
+  <button class="btn btn-primary">Enviar</button>
+ </div>
+ 
+</form>
+{% endblock %}
