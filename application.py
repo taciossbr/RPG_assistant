@@ -4,12 +4,12 @@ from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 
 url = os.environ['DATABASE_URL']
-secret_key = os.environ['SECRET_KEY']
+# secret_key = os.environ['SECRET_KEY']
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = secret_key
+# app.config['SECRET_KEY'] = secret_key
 db = SQLAlchemy(app)
 
 class User(db.Model):
