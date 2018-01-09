@@ -16,8 +16,23 @@
   </header>
 
   <div class="container">
-   {% block content %}
-   {% endblock %}
+    {% if success %}
+      <div class="alert alert-success" role="alert">
+        {{ success }}
+      </div>
+    {% endif %}
+    {% if alert %}
+      <div class="alert alert-warning" role="alert">
+        {{ alert }}
+      </div>
+    {% endif %}
+    {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
   </div>
   <footer class="footer">
    {% block footer %}
@@ -25,7 +40,11 @@
   </footer>
  </body>
  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
  {% block scripts %}
  {% endblock %}
 </html>
+

@@ -1,0 +1,148 @@
+{% extends "single.html" %}
+{% block title %}Hello World{% endblock %}
+{% block scripts %}
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script>
+    $(function() {
+      $("#send").click(function(){
+        $("#raca").submit();
+        
+      })
+      $("button[id^=det_]").on("click", function(event){
+        id = this.id.substring(4, this.id.length);
+        // $.ajax({
+        //     url: "/raca_json/"+id,
+        //     dataType: 'jsonp',
+        //     success: function(results){
+        //         console.log(results);
+        //     }
+        // });
+        $.ajax({
+          // type: 'GET',
+          url: "/raca_json/"+id,
+          // data: postedData,
+          // dataType: 'json',
+          success: function(results){
+            d = $.parseJSON(results)
+            for (var p in d){
+              $("#"+p).val(d[p])
+            }
+            
+          }
+        });
+        $("#modal_raca").modal("show")
+
+      })
+
+      
+    })
+    
+  </script>
+{% endblock %}
+{% block style %}
+  <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet"/>
+
+  <style>
+    [draggable] {
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      /* Required to make elements draggable in old WebKit */
+      -khtml-user-drag: element;
+      -webkit-user-drag: element;
+    }
+
+    .column {
+    display: flex;
+    flex-direction: column;
+  }
+    
+  </style>
+
+
+{% endblock %}
+{% block header %}
+ <h1>RPG - Raças</h1>
+{% endblock %}
+{% block content %}
+
+  <button class="btn btn-primary" data-toggle="modal" data-target="#modal_raca">
+    Nova Raça
+  </button>
+  <table class="table">
+    <thead>
+    <th>#<th>Raca
+    </thead>
+    <tbody>
+    {% for row in rows %}
+      <tr>
+      <td>{{ row.id }}
+      <td>{{ row.nome }}
+      <td>
+        <button id="det_{{ row.id }}" class="btn btn-primary" data-toggle="modal" data-target="#modal_raca">
+            Detalhes
+        </button>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <form action="/raca" method="POST" id="raca">
+    <div class="modal fade" id="modal_raca">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nova Raça</h5>
+          </div>
+          <div class="modal-body">
+
+            
+            <label for="nome">Nome da Raça: </label>
+            <input type="text" name="nome" id="nome" class="form-control" value="{{ nome }}">
+
+            <label for="idade_adulto">Idade adulto: </label>
+            <input type="number" name="idade_adulto" id="idade_adulto" class="form-control" value="{{ idade_adulto }}">
+            
+            <label for="idade_max">Idade Máxima: </label>
+            <input type="number" name="idade_max" id="idade_max" class="form-control" value="{{ idade_max }}">
+
+            <label for="tam_min">Tamanho mínimo</label>
+            <input type="number" name="tam_min" id="tam_min" class="form-control" value="{{ tam_min }}">
+
+            <label for="tam_max">Tamanho máximo</label>
+            <input type="number" name="tam_max" id="tam_max" class="form-control" value="{{ tam_max }}">
+
+            <label for="desloc">Deslocamento</label>
+            <input type="number" name="desloc" id="desloc" class="form-control" value="{{ desloc }}">
+
+            <label for="desloc_armadura">Deslocamento Armadura</label>
+            <input type="text" name="desloc_armadura" id="desloc_armadura" class="form-control" value="{{ desloc_armadura }}">
+            
+            <label for="tendencia">Tendência</label>
+            <textarea name="tendencia" id="tendencia" cols="30" rows="10" class="form-control">{{ tendencia }}</textarea>
+
+          </div>
+          <div class="modal-footer">
+            <button 
+            class="btn btn-danger" 
+            data-dismiss="modal">
+            Cancel
+            </button>
+
+            <button 
+            id="send"
+            class="btn btn-primary" 
+            data-dismiss="modal">
+            Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}	
